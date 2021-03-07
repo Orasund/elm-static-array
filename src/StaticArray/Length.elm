@@ -1,10 +1,19 @@
-module StaticArray.Length exposing (Length, minus1, minus10, minus2, minus20, minus4, minus5, minus8, one, plus1, plus10, plus2, plus20, plus4, plus5, plus8)
+module StaticArray.Length exposing
+    ( Length, one, two, four, five, eight, ten, twenty
+    , plus1, plus2, plus4, plus5, plus8, plus10, plus20
+    , minus1, minus2, minus4, minus5, minus8, minus10, minus20
+    )
 
 {-| This module introduces the `Length` type. The length type is a integer but its value is known in compile time.
 This way we can ensure that no index out of bounds error accures.
+
+@docs Length, one, two, four, five, eight, ten, twenty
+@docs plus1, plus2, plus4, plus5, plus8, plus10, plus20
+@docs minus1, minus2, minus4, minus5, minus8, minus10, minus20
+
 -}
 
-import StaticArray.Index exposing (EightPlus, FivePlus, FourPlus, One, OnePlus, TenPlus, TwentyPlus, TwoPlus)
+import StaticArray.Index exposing (Eight, EightPlus, Five, FivePlus, Four, FourPlus, One, OnePlus, Ten, TenPlus, Twenty, TwentyPlus, Two, TwoPlus)
 import StaticArray.Internal as Internal exposing (Length(..))
 
 
@@ -12,9 +21,9 @@ import StaticArray.Internal as Internal exposing (Length(..))
 
 ```
 StaticArray.singelton 42
-|> StaticArray.push 7
-|> StaticArray.length
---> (one |> plus1)
+    |> StaticArray.push 7
+    |> StaticArray.length
+    --> two
 ```
 
 -}
@@ -27,6 +36,48 @@ type alias Length n =
 one : Length One
 one =
     C 1
+
+
+{-| Length of a array with two elements
+-}
+two : Length Two
+two =
+    C 2
+
+
+{-| Length of a array with four elements
+-}
+four : Length Four
+four =
+    C 4
+
+
+{-| Length of a array with five elements
+-}
+five : Length Five
+five =
+    C 5
+
+
+{-| Length of a array with eight elements
+-}
+eight : Length Eight
+eight =
+    C 8
+
+
+{-| Length of a array with ten elements
+-}
+ten : Length Ten
+ten =
+    C 10
+
+
+{-| Length of a array with twenty elements
+-}
+twenty : Length Twenty
+twenty =
+    C 20
 
 
 {-| Increases the length by one

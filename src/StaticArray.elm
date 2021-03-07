@@ -1,7 +1,10 @@
-module StaticArray exposing (StaticArray, append10, append2, append20, append4, append5, append8, get, length, push, resize, singleton, toArray)
+module StaticArray exposing (StaticArray, singleton, fromList, push, get, set, length, resize, toArray, map, indexedMap, toRecord, fromRecord)
 
 {-| This module introduces the `StaticArray`. A static array is a non empty array fix a fixed size.
 We can check the size in compile-time and ensure that the array is about as fast as a usual (dynamic) array in run time.
+
+@docs StaticArray, singleton, fromList, push, get, set, length, resize, toArray, map, indexedMap, toRecord, fromRecord
+
 -}
 
 import Array exposing (Array)
@@ -23,9 +26,6 @@ twoElements =
     |> push 7
 ```
 
-For constructing a static array you will need to push one element after another onto the array.
-For bigger arrays this can consume quite a lot of time. Instead we recommend using `StaticArray.Builder`.
-
 -}
 type alias StaticArray n a =
     Internal.StaticArray n a
@@ -38,53 +38,26 @@ singleton a =
     A ( a, Array.empty )
 
 
+{-| Constructs an array from a list
+-}
+fromList : Length n -> a -> List a -> StaticArray n a
+fromList (C l) head tail =
+    let
+        diff =
+            (tail |> List.length |> (+) 1) - l
+    in
+    if diff < 0 then
+        A ( head, List.append tail (List.repeat diff head) |> Array.fromList )
+
+    else
+        A ( head, tail |> Array.fromList |> Array.slice 0 l )
+
+
 {-| Adds a element to the end of the array.
 -}
 push : a -> StaticArray n a -> StaticArray (OnePlus n) a
 push a (A ( head, tail )) =
     A ( head, Array.push a tail )
-
-
-{-| Adds two element to the end of the array.
--}
-append2 : StaticArray Two a -> StaticArray n a -> StaticArray (TwoPlus n) a
-append2 a1 (A ( h2, t2 )) =
-    A ( h2, Array.append t2 (a1 |> toArray) )
-
-
-{-| Adds four element to the end of the array.
--}
-append4 : StaticArray Four a -> StaticArray n a -> StaticArray (FourPlus n) a
-append4 a1 (A ( h2, t2 )) =
-    A ( h2, Array.append t2 (a1 |> toArray) )
-
-
-{-| Adds eight element to the end of the array.
--}
-append8 : StaticArray Eight a -> StaticArray n a -> StaticArray (EightPlus n) a
-append8 a1 (A ( h2, t2 )) =
-    A ( h2, Array.append t2 (a1 |> toArray) )
-
-
-{-| Adds five element to the end of the array.
--}
-append5 : StaticArray Five a -> StaticArray n a -> StaticArray (FivePlus n) a
-append5 a1 (A ( h2, t2 )) =
-    A ( h2, Array.append t2 (a1 |> toArray) )
-
-
-{-| Adds ten element to the end of the array.
--}
-append10 : StaticArray Ten a -> StaticArray n a -> StaticArray (TenPlus n) a
-append10 a1 (A ( h2, t2 )) =
-    A ( h2, Array.append t2 (a1 |> toArray) )
-
-
-{-| Adds twenty element to the end of the array.
--}
-append20 : StaticArray Twenty a -> StaticArray n a -> StaticArray (TwentyPlus n) a
-append20 a1 (A ( h2, t2 )) =
-    A ( h2, Array.append t2 (a1 |> toArray) )
 
 
 {-| Changes the size of the array. If the array gets bigger, then the first element of the array gets used as default value.
@@ -118,7 +91,55 @@ toArray (A ( head, tail )) =
     Array.append ([ head ] |> Array.fromList) tail
 
 
-{-| Gets an element of the array. Note that it only allows an index that is in bound. Therefore eliminating Off-by-one errors.
+{-| Exposes the underlying record of the array
+
+```
+array =
+    [0,1,2,3,4,5]
+        |> fromList (Length.five |> Length.plus1 )
+
+array |> toRecord |> fromRecord --> array
+```
+
+-}
+toRecord : StaticArray n a -> { length : Length n, head : a, tail : Array a }
+toRecord (A ( head, tail )) =
+    { length = C <| (tail |> Array.length) + 1
+    , head = head
+    , tail = tail
+    }
+
+
+{-| Constructs a static array from its components.
+If the Length is bigger then the number of elements provided, the additional element will be filled with duplicates of head.
+
+```
+fromRecord
+    { length = (Length.five |> Length.plus1 )
+    , head = 0
+    , tail = [1,2,3,4,5]
+    }
+    --> fromList (Length.five |> Length.plus1 ) [0,1,2,3,4,5]
+```
+
+-}
+fromRecord : { length : Length n, head : a, tail : Array a } -> StaticArray n a
+fromRecord record =
+    let
+        (C l) =
+            record.length
+
+        diff =
+            (record.tail |> Array.length |> (+) 1) - l
+    in
+    if diff < 0 then
+        A ( record.head, Array.append record.tail (Array.repeat diff record.head) )
+
+    else
+        A ( record.head, record.tail |> Array.slice 0 l )
+
+
+{-| Gets an element of the array. Note that it only possible if the index is in bound. Therefore eliminating Off-by-one errors.
 -}
 get : Index n -> StaticArray n a -> a
 get (I n) (A ( head, tail )) =
@@ -129,6 +150,32 @@ get (I n) (A ( head, tail )) =
         tail
             |> Array.get (n - 1)
             |> Maybe.withDefault head
+
+
+{-| Sets an element of the array.
+-}
+set : Index n -> a -> StaticArray n a -> StaticArray n a
+set (I n) a (A ( head, tail )) =
+    A <|
+        if n == 0 then
+            ( a, tail )
+
+        else
+            ( head, tail |> Array.set (n - 1) a )
+
+
+{-| Updates all elements of an array.
+-}
+map : (a -> a) -> StaticArray n a -> StaticArray n a
+map fun (A ( head, tail )) =
+    A ( fun head, tail |> Array.map fun )
+
+
+{-| Same as map but with an index.
+-}
+indexedMap : (Index n -> a -> a) -> StaticArray n a -> StaticArray n a
+indexedMap fun (A ( head, tail )) =
+    A ( fun (I 0) head, tail |> Array.indexedMap (\n -> fun (I (n - 1))) )
 
 
 {-| Returns the length of an array.
