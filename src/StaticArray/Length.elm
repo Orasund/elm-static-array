@@ -20,7 +20,7 @@ import StaticArray.Internal as Internal exposing (Length(..))
 {-| A length represents the length of a static array
 
 ```
-StaticArray.singelton 42
+StaticArray.singleton 42
     |> StaticArray.push 7
     |> StaticArray.length
     --> two
