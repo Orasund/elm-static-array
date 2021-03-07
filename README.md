@@ -53,7 +53,7 @@ StaticArray.fromRecord
   }
 ```
 
-Notice that we can NOT do addition in compile time, therefore we need to construct 2*6 manually.
+Notice that we can NOT do addition in compile time, therefore we need to construct `6+6` manually.
 
 ## Removing Elements
 
