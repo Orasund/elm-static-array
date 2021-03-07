@@ -8,23 +8,23 @@ We can check the size in compile-time and ensure that the array is about as fast
 -}
 
 import Array exposing (Array)
-import StaticArray.Index exposing (Eight, EightPlus, Five, FivePlus, Four, FourPlus, Index, One, OnePlus(..), Ten, TenPlus, Twenty, TwentyPlus, Two, TwoPlus)
+import StaticArray.Index exposing (Index, One, OnePlus(..))
 import StaticArray.Internal as Internal exposing (Index(..), Length(..), StaticArray(..))
 import StaticArray.Length exposing (Length)
 
 
 {-| A static array is an array with a fixed length.
 
-```
-singleElement : StaticArray One Int
-singleElement =
-    singleton 42
+    singleElement : StaticArray One Int
+    singleElement =
+        singleton 42
 
-twoElements : StaticArray Two Int
-twoElements =
-    singleElement
-    |> push 7
-```
+
+
+    twoElements : StaticArray Two Int
+    twoElements =
+        singleElement
+            |> push 7
 
 -}
 type alias StaticArray n a =
@@ -39,6 +39,15 @@ singleton a =
 
 
 {-| Constructs an array from a list
+
+    import Array
+    import StaticArray.Length as Length
+
+    fromList Length.five 0 []
+        |> toArray
+        |> Array.toList
+        --> [0,0,0,0,0]
+
 -}
 fromList : Length n -> a -> List a -> StaticArray n a
 fromList (C l) head tail =
@@ -47,7 +56,7 @@ fromList (C l) head tail =
             (tail |> List.length |> (+) 1) - l
     in
     if diff < 0 then
-        A ( head, List.append tail (List.repeat diff head) |> Array.fromList )
+        A ( head, List.append tail (List.repeat (abs diff) head) |> Array.fromList )
 
     else
         A ( head, tail |> Array.fromList |> Array.slice 0 l )
@@ -62,13 +71,14 @@ push a (A ( head, tail )) =
 
 {-| Changes the size of the array. If the array gets bigger, then the first element of the array gets used as default value.
 
-```
-singleton 42
-|> push 7
-|> resize (Length.one |> Length.plus4)
-|> toArray
-|> Array.toList --> [42,7,42,42,42]
-```
+    import StaticArray.Length as Length
+    import Array
+
+    singleton 42
+        |> push 7
+        |> resize (Length.one |> Length.plus4)
+        |> toArray
+        |> Array.toList --> [42,7,42,42,42]
 
 -}
 resize : Length m -> StaticArray n a -> StaticArray m a
@@ -78,7 +88,7 @@ resize (C l) (A ( head, tail )) =
             (tail |> Array.length |> (+) 1) - l
     in
     if diff < 0 then
-        A ( head, Array.append tail (Array.repeat diff head) )
+        A ( head, Array.append tail (Array.repeat (abs diff) head) )
 
     else
         A ( head, tail |> Array.slice 0 l )
@@ -93,13 +103,15 @@ toArray (A ( head, tail )) =
 
 {-| Exposes the underlying record of the array
 
-```
-array =
-    [0,1,2,3,4,5]
-        |> fromList (Length.five |> Length.plus1 )
+    import StaticArray.Length as Length
+    import StaticArray.Index exposing (Five,OnePlus)
 
-array |> toRecord |> fromRecord --> array
-```
+    array : StaticArray (OnePlus Five) Int
+    array =
+        fromList (Length.five |> Length.plus1 ) 0
+            [1,2,3,4,5]
+
+    array |> toRecord |> fromRecord --> array
 
 -}
 toRecord : StaticArray n a -> { length : Length n, head : a, tail : Array a }
@@ -113,14 +125,15 @@ toRecord (A ( head, tail )) =
 {-| Constructs a static array from its components.
 If the Length is bigger then the number of elements provided, the additional element will be filled with duplicates of head.
 
-```
-fromRecord
+    import StaticArray.Length as Length
+    import Array
+
+    fromRecord
     { length = (Length.five |> Length.plus1 )
     , head = 0
-    , tail = [1,2,3,4,5]
+    , tail = Array.fromList [1,2,3,4,5]
     }
-    --> fromList (Length.five |> Length.plus1 ) [0,1,2,3,4,5]
-```
+    --> fromList (Length.five |> Length.plus1 ) 0 [1,2,3,4,5]
 
 -}
 fromRecord : { length : Length n, head : a, tail : Array a } -> StaticArray n a
@@ -133,7 +146,7 @@ fromRecord record =
             (record.tail |> Array.length |> (+) 1) - l
     in
     if diff < 0 then
-        A ( record.head, Array.append record.tail (Array.repeat diff record.head) )
+        A ( record.head, Array.append record.tail (Array.repeat (abs diff) record.head) )
 
     else
         A ( record.head, record.tail |> Array.slice 0 l )

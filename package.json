@@ -1,0 +1,28 @@
+{
+  "name": "elm-static-array",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "elm-test": "^0.19.1-revision6"
+  },
+  "scripts": {
+    "test": "."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Orasund/elm-static-array.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Orasund/elm-static-array/issues"
+  },
+  "homepage": "https://github.com/Orasund/elm-static-array#readme",
+  "dependencies": {
+    "escape-string-regexp": "^4.0.0"
+  }
+}

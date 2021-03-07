@@ -48,10 +48,10 @@ last (C const) =
 
 {-| Construct an Index by wrapping higher values
 
-```
-fromModBy (Length.one |> Length.plus2) 3
---> first --0
-```
+    import StaticArray.Length as Length
+
+    fromModBy (Length.one |> Length.plus2) 3
+    --> first --0
 
 -}
 fromModBy : Length n -> Int -> Index n
@@ -61,15 +61,20 @@ fromModBy (C const) =
 
 {-| Construct an Index by cutting off higher values
 
-```
-fromModBy (Length.one |> Length.plus2) 3
---> first |> increase |> increase --2
-```
+    import StaticArray.Length as Length exposing (Length)
+    import StaticArray.Index exposing (OnePlus,Two)
+
+    length : Length (OnePlus Two)
+    length =
+        (Length.one |> Length.plus2)
+
+    fromLessThen length 3
+    --> last length --2
 
 -}
 fromLessThen : Length n -> Int -> Index n
 fromLessThen (C const) =
-    min (const - 1) >> I
+    min const >> I
 
 
 {-| Increases the index by one. You can not increase the last index.

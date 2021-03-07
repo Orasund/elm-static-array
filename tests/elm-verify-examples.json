@@ -2,7 +2,6 @@
   "root": "../src",
   "tests": [
     "StaticArray",
-    "StaticArray.Builder",
     "StaticArray.Index",
     "StaticArray.Length",
     "./README.md"
