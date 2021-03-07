@@ -1,7 +1,7 @@
 {
     "type": "package",
     "name": "Orasund/elm-static-array",
-    "summary": "Array with fixed length using phantom types.",
+    "summary": "Arrays with fixed length using phantom types.",
     "license": "BSD-3-Clause",
     "version": "1.0.0",
     "exposed-modules": [
