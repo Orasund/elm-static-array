@@ -1,9 +1,12 @@
-module StaticArray exposing (StaticArray, singleton, fromList, push, get, set, length, resize, toArray, map, indexedMap, toRecord, fromRecord)
+module StaticArray exposing
+    ( StaticArray, singleton, fromList, push, get, set, length, resize, toArray, toList, map, indexedMap, toRecord, fromRecord
+    , initialize
+    )
 
 {-| This module introduces the `StaticArray`. A static array is a non empty array fix a fixed size.
 We can check the size in compile-time and ensure that the array is about as fast as a usual (dynamic) array in run time.
 
-@docs StaticArray, singleton, fromList, push, get, set, length, resize, toArray, map, indexedMap, toRecord, fromRecord
+@docs StaticArray, singleton, fromList, push, get, set, length, resize, toArray, toList, map, indexedMap, toRecord, fromRecord
 
 -}
 
@@ -45,8 +48,7 @@ singleton a =
 
     fromList Length.five 0 []
         |> toArray
-        |> Array.toList
-        --> [0,0,0,0,0]
+        --> Array.repeat 5 0
 
 -}
 fromList : Length n -> a -> List a -> StaticArray n a
@@ -60,6 +62,19 @@ fromList (C l) head tail =
 
     else
         A ( head, tail |> Array.fromList |> Array.slice 0 l )
+
+
+{-| Initiate an array and fill it.
+
+    import StaticArray.Length as Length
+
+    initialize Length.five (\i -> i*i)
+    --> fromList Length.five 0 [1,4,9,16]
+
+-}
+initialize : Length n -> (Int -> a) -> StaticArray n a
+initialize (C l) fun =
+    A ( fun 0, Array.initialize (l - 1) ((+) 1 >> fun) )
 
 
 {-| Adds a element to the end of the array.
@@ -91,7 +106,7 @@ resize (C l) (A ( head, tail )) =
         A ( head, Array.append tail (Array.repeat (abs diff) head) )
 
     else
-        A ( head, tail |> Array.slice 0 l )
+        A ( head, tail |> Array.slice 0 (l - 1) )
 
 
 {-| Transforms the static array into a dynamic array.
@@ -99,6 +114,13 @@ resize (C l) (A ( head, tail )) =
 toArray : StaticArray n a -> Array a
 toArray (A ( head, tail )) =
     Array.append ([ head ] |> Array.fromList) tail
+
+
+{-| Transforms the static array into a list.
+-}
+toList : StaticArray n a -> List a
+toList =
+    toArray >> Array.toList
 
 
 {-| Exposes the underlying record of the array
@@ -179,14 +201,14 @@ set (I n) a (A ( head, tail )) =
 
 {-| Updates all elements of an array.
 -}
-map : (a -> a) -> StaticArray n a -> StaticArray n a
+map : (a -> b) -> StaticArray n a -> StaticArray n b
 map fun (A ( head, tail )) =
     A ( fun head, tail |> Array.map fun )
 
 
 {-| Same as map but with an index.
 -}
-indexedMap : (Index n -> a -> a) -> StaticArray n a -> StaticArray n a
+indexedMap : (Index n -> a -> b) -> StaticArray n a -> StaticArray n b
 indexedMap fun (A ( head, tail )) =
     A ( fun (I 0) head, tail |> Array.indexedMap (\n -> fun (I (n - 1))) )
 

@@ -25,25 +25,40 @@ The package contains three types:
 
 ## Construction
 
+```elm
+import StaticArray.Length as Length
+import StaticArray
+
+StaticArray.fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
+|> StaticArray.toList
+--> [0,1,2,3,4,5]
 ```
-StaticArray.fromList (Length.five |> Length.plus1) [0,1,2,3,4,5]
-```
+
 
 ## Appending Elements
 
-```
+```elm
+import StaticArray.Length as Length exposing (Length)
+import StaticArray.Index exposing (OnePlus,Five,Ten,TwoPlus)
+import StaticArray
+import Array
+
+six : Length (OnePlus Five)
 six =
   Length.five |> Length.plus1
 
+twelve : Length (TwoPlus Ten)
 twelve =
   Length.ten |> Length.plus2
 
+array1 : { head : Int, length : Length (OnePlus Five), tail : Array.Array Int }
 array1 =
-  StaticArray.fromList six [0,1,2,3,4,5]
+  StaticArray.fromList six 0[1,2,3,4,5]
   |> StaticArray.toRecord
 
+array2 : { head : Int, length : Length (OnePlus Five), tail : Array.Array Int }
 array2 =
-  StaticArray.fromList six [0,1,2,3,4,5]
+  StaticArray.fromList six 0 [1,2,3,4,5]
   |> StaticArray.toRecord
 
 StaticArray.fromRecord
@@ -51,30 +66,44 @@ StaticArray.fromRecord
   , head = array1.head
   , tail = Array.append (array1.tail |> Array.push array2.head) array2.tail
   }
+  |> StaticArray.toList
+  --> [0,1,2,3,4,5,0,1,2,3,4,5]
 ```
 
 Notice that we can NOT do addition in compile time, therefore we need to construct `6+6` manually.
 
 ## Removing Elements
 
-```
+```elm
+import StaticArray.Length as Length exposing (Length)
+import StaticArray.Index exposing (Five,OnePlus)
+import StaticArray exposing (StaticArray)
+
+six : Length (OnePlus Five)
 six =
   Length.five |> Length.plus1
 
+array : StaticArray (OnePlus Five) Int
 array =
-  StaticArray.fromList six [0,1,2,3,4,5]
+  StaticArray.fromList six 0 [1,2,3,4,5]
 
 array
   |> StaticArray.resize (six |> Length.minus1)
-  --> StaticArray.fromList Legnth.five [0,1,2,3,4]
+  --> StaticArray.fromList Length.five 0 [1,2,3,4]
 ```
 
 ## Avoiding index out of bounds errors
 
-```
-array =
-  StaticArray.fromList Length.five [0,1,2,3,4]
+```elm
+import StaticArray.Length as Length
+import StaticArray.Index as Index exposing (Index)
+import StaticArray exposing (StaticArray)
 
+array : StaticArray Five Int
+array =
+  StaticArray.fromList Length.five 0 [1,2,3,4]
+
+fifthIndex : Index Five
 fifthIndex =
   array |> Index.last (Array |> StaticArray.legnth)
 
@@ -85,14 +114,18 @@ array
 
 ## Converting into/from Int
 
-```
+```elm
+import StaticArray.Length as Length
+import StaticArray.Index as Index exposing (Two)
+import StaticArray exposing (StaticArray)
+
 type Food =
   Apples
   | Oranges
 
 asArray : StaticArray Two Food
 asArray =
-  StaticArray.fromList Length.two [Apples,Oranges]
+  StaticArray.fromList Length.two Apples [Oranges]
 
 toInt : Food -> Int
 toInt food =
@@ -104,6 +137,11 @@ fromInt : Int -> Food
 fromInt int =
   asArray
     |> StaticArray.get (int |> Index.fromModBy Length.two)
+
+Apples
+|> toInt
+|> fromInt
+--> Apples
 ```
 
 No dead branch needed.  

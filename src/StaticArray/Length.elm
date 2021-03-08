@@ -1,15 +1,33 @@
 module StaticArray.Length exposing
-    ( Length, one, two, four, five, eight, ten, twenty
-    , plus1, plus2, plus4, plus5, plus8, plus10, plus20
-    , minus1, minus2, minus4, minus5, minus8, minus10, minus20
+    ( Length, minus1, toInt
+    , two, four, five, eight, ten, twenty
+    , plus2, plus4, plus5, plus8, plus10, plus20
+    , minus2, minus4, minus5, minus8, minus10, minus20
+    , one, plus1
     )
 
 {-| This module introduces the `Length` type. The length type is a integer but its value is known in compile time.
 This way we can ensure that no index out of bounds error accures.
 
-@docs Length, one, two, four, five, eight, ten, twenty
-@docs plus1, plus2, plus4, plus5, plus8, plus10, plus20
-@docs minus1, minus2, minus4, minus5, minus8, minus10, minus20
+
+# Basics
+
+@docs Length, one plus1, minus1, toInt
+
+
+# Constructors
+
+@docs two, four, five, eight, ten, twenty
+
+
+# Addition
+
+@docs plus2, plus4, plus5, plus8, plus10, plus20
+
+
+# Subtraction
+
+@docs minus2, minus4, minus5, minus8, minus10, minus20
 
 -}
 
@@ -29,6 +47,18 @@ import StaticArray.Internal as Internal exposing (Length(..))
 -}
 type alias Length n =
     Internal.Length n
+
+
+{-| Converts a length into int
+
+    four
+    |> toInt
+    --> 4
+
+-}
+toInt : Length n -> Int
+toInt (C n) =
+    n
 
 
 {-| Length of a array with one element

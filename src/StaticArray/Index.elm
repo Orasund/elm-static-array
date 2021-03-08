@@ -40,10 +40,19 @@ first =
 
 
 {-| The last element of an array with length n
+
+    import StaticArray.Length as Length
+    import StaticArray.Index as Index
+
+    Length.five
+    |> last
+    |> Index.toInt
+    --> 4
+
 -}
 last : Length n -> Index n
 last (C const) =
-    I const
+    I (const - 1)
 
 
 {-| Construct an Index by wrapping higher values
@@ -74,7 +83,7 @@ fromModBy (C const) =
 -}
 fromLessThen : Length n -> Int -> Index n
 fromLessThen (C const) =
-    min const >> I
+    min (const - 1) >> I
 
 
 {-| Increases the index by one. You can not increase the last index.
