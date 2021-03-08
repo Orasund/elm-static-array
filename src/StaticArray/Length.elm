@@ -1,9 +1,8 @@
 module StaticArray.Length exposing
-    ( Length, minus1, toInt
+    ( Length, one, plus1, minus1, toInt
     , two, four, five, eight, ten, twenty
     , plus2, plus4, plus5, plus8, plus10, plus20
     , minus2, minus4, minus5, minus8, minus10, minus20
-    , one, plus1
     )
 
 {-| This module introduces the `Length` type. The length type is a integer but its value is known in compile time.
@@ -12,7 +11,7 @@ This way we can ensure that no index out of bounds error accures.
 
 # Basics
 
-@docs Length, one plus1, minus1, toInt
+@docs Length, one, plus1, minus1, toInt
 
 
 # Constructors

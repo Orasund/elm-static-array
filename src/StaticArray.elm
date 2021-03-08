@@ -1,12 +1,26 @@
 module StaticArray exposing
-    ( StaticArray, singleton, fromList, push, get, set, length, resize, toArray, toList, map, indexedMap, toRecord, fromRecord
-    , initialize
+    ( StaticArray, singleton, fromList, initialize
+    , push, get, set, resize, length, map, indexedMap
+    , toArray, toList, toRecord, fromRecord
     )
 
 {-| This module introduces the `StaticArray`. A static array is a non empty array fix a fixed size.
 We can check the size in compile-time and ensure that the array is about as fast as a usual (dynamic) array in run time.
 
-@docs StaticArray, singleton, fromList, push, get, set, length, resize, toArray, toList, map, indexedMap, toRecord, fromRecord
+
+# Constructor
+
+@docs StaticArray, singleton, fromList, initialize
+
+
+# Operations
+
+@docs push, get, set, resize, length, map, indexedMap
+
+
+# Conversion
+
+@docs toArray, toList, toRecord, fromRecord
 
 -}
 

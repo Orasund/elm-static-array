@@ -1,7 +1,9 @@
 module StaticArray.Index exposing
-    ( Index, range, first, last, fromModBy, fromLessThen, increase, decrease, toInt, setLength
-    , One(..), Two, Three, Four, Five, Seven, Eight, Nine, Ten, Twenty
-    , OnePlus(..), TwoPlus, FourPlus, FivePlus, EightPlus, TenPlus, TwentyPlus
+    ( One(..), OnePlus(..)
+    , Index, range, first, last, fromModBy, fromLessThen
+    , increase, decrease, toInt, setLength
+    , Two, Three, Four, Five, Seven, Eight, Nine, Ten, Twenty
+    , TwoPlus, FourPlus, FivePlus, EightPlus, TenPlus, TwentyPlus
     )
 
 {-| This module contains the `Index` type which can be though of as a range type.
@@ -9,9 +11,30 @@ A value of type `Index n` is in between `0` and `n`.
 
 This type will be replaced in compile type with an Int. Resulting in no performance loss.
 
-@docs Index, range, first, last, fromModBy, fromLessThen, increase, decrease, toInt, setLength
-@docs One, Two, Three, Four, Five, Seven, Eight, Nine, Ten, Twenty
-@docs OnePlus, TwoPlus, FourPlus, FivePlus, EightPlus, TenPlus, TwentyPlus
+
+# Number Types
+
+@docs One, OnePlus
+
+
+# Constructor
+
+@docs Index, range, first, last, fromModBy, fromLessThen
+
+
+# Operations
+
+@docs increase, decrease, toInt, setLength
+
+
+# Predefined Number Types
+
+@docs Two, Three, Four, Five, Seven, Eight, Nine, Ten, Twenty
+
+
+# Type Level Addition
+
+@docs TwoPlus, FourPlus, FivePlus, EightPlus, TenPlus, TwentyPlus
 
 -}
 
