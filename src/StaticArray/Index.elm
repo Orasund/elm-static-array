@@ -51,7 +51,7 @@ type alias Index n =
 -}
 range : Length n -> List (Index n)
 range (C const) =
-    List.range 0 const
+    List.range 0 (const - 1)
         |> List.map I
 
 
