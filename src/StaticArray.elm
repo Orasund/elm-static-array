@@ -36,8 +36,6 @@ import StaticArray.Length exposing (Length)
     singleElement =
         singleton 42
 
-
-
     twoElements : StaticArray Two Int
     twoElements =
         singleElement
@@ -91,7 +89,7 @@ initialize (C l) fun =
     A ( fun 0, Array.initialize (l - 1) ((+) 1 >> fun) )
 
 
-{-| Adds a element to the end of the array.
+{-| Adds an element to the end of the array.
 -}
 push : a -> StaticArray n a -> StaticArray (OnePlus n) a
 push a (A ( head, tail )) =
@@ -144,7 +142,7 @@ toList =
 
     array : StaticArray (OnePlus Five) Int
     array =
-        fromList (Length.five |> Length.plus1 ) 0
+        fromList (Length.five |> Length.plus1) 0
             [1,2,3,4,5]
 
     array |> toRecord |> fromRecord --> array
@@ -165,10 +163,10 @@ If the Length is bigger then the number of elements provided, the additional ele
     import Array
 
     fromRecord
-    { length = (Length.five |> Length.plus1 )
-    , head = 0
-    , tail = Array.fromList [1,2,3,4,5]
-    }
+        { length = (Length.five |> Length.plus1 )
+        , head = 0
+        , tail = Array.fromList [1,2,3,4,5]
+        }
     --> fromList (Length.five |> Length.plus1 ) 0 [1,2,3,4,5]
 
 -}
