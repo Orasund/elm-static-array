@@ -6,7 +6,7 @@ module StaticArray.Length exposing
     )
 
 {-| This module introduces the `Length` type. The length type is an integer but its value is known in compile time.
-This way we can ensure that no index out of bounds error accures.
+This way we can ensure that no index out of bounds error occurs.
 
 
 # Basics
