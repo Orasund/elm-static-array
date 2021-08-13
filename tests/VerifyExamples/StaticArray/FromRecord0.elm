@@ -18,16 +18,16 @@ import StaticArray.Length as Length
 
 spec0 : Test.Test
 spec0 =
-    Test.test "#fromRecord: \n\n    fromRecord\n    { length = (Length.five |> Length.plus1 )\n    , head = 0\n    , tail = Array.fromList [1,2,3,4,5]\n    }\n    --> fromList (Length.five |> Length.plus1 ) 0 [1,2,3,4,5]" <|
+    Test.test "#fromRecord: \n\n    fromRecord\n        { length = (Length.five |> Length.plus1)\n        , head = 0\n        , tail = Array.fromList [1,2,3,4,5]\n        }\n    --> fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]" <|
         \() ->
             Expect.equal
                 (
                 fromRecord
-                { length = (Length.five |> Length.plus1 )
-                , head = 0
-                , tail = Array.fromList [1,2,3,4,5]
-                }
+                    { length = (Length.five |> Length.plus1)
+                    , head = 0
+                    , tail = Array.fromList [1,2,3,4,5]
+                    }
                 )
                 (
-                fromList (Length.five |> Length.plus1 ) 0 [1,2,3,4,5]
+                fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
                 )

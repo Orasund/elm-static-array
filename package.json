@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Orasund/elm-static-array#readme",
   "dependencies": {
+    "elm-verify-examples": "^5.0.0",
     "escape-string-regexp": "^4.0.0"
   }
 }

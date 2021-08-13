@@ -14,7 +14,7 @@ import StaticArray.Length as Length
 
 array : StaticArray (OnePlus Five) Int
 array =
-    fromList (Length.five |> Length.plus1 ) 0
+    fromList (Length.five |> Length.plus1) 0
         [1,2,3,4,5]
 
 

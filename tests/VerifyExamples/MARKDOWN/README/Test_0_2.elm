@@ -23,12 +23,12 @@ six =
 
 spec0 : Test.Test
 spec0 =
-    Test.test "Documentation VerifyExamples: \n\n    array\n      |> StaticArray.resize (six |> Length.minus1)\n    --> StaticArray.fromList Length.five 0 [1,2,3,4]" <|
+    Test.test "Documentation VerifyExamples: \n\n    array\n    |> StaticArray.resize (six |> Length.minus1)\n    --> StaticArray.fromList Length.five 0 [1,2,3,4]" <|
         \() ->
             Expect.equal
                 (
                 array
-                  |> StaticArray.resize (six |> Length.minus1)
+                |> StaticArray.resize (six |> Length.minus1)
                 )
                 (
                 StaticArray.fromList Length.five 0 [1,2,3,4]
