@@ -5,8 +5,8 @@ module StaticArray.Length exposing
     , minus2, minus4, minus5, minus8, minus10, minus20
     )
 
-{-| This module introduces the `Length` type. The length type is a integer but its value is known in compile time.
-This way we can ensure that no index out of bounds error accures.
+{-| This module introduces the `Length` type. The length type is an integer but its value is known in compile time.
+This way we can ensure that no index out of bounds error occurs.
 
 
 # Basics
@@ -60,49 +60,49 @@ toInt (C n) =
     n
 
 
-{-| Length of a array with one element
+{-| Length of an array with one element
 -}
 one : Length One
 one =
     C 1
 
 
-{-| Length of a array with two elements
+{-| Length of an array with two elements
 -}
 two : Length Two
 two =
     C 2
 
 
-{-| Length of a array with four elements
+{-| Length of an array with four elements
 -}
 four : Length Four
 four =
     C 4
 
 
-{-| Length of a array with five elements
+{-| Length of an array with five elements
 -}
 five : Length Five
 five =
     C 5
 
 
-{-| Length of a array with eight elements
+{-| Length of an array with eight elements
 -}
 eight : Length Eight
 eight =
     C 8
 
 
-{-| Length of a array with ten elements
+{-| Length of an array with ten elements
 -}
 ten : Length Ten
 ten =
     C 10
 
 
-{-| Length of a array with twenty elements
+{-| Length of an array with twenty elements
 -}
 twenty : Length Twenty
 twenty =

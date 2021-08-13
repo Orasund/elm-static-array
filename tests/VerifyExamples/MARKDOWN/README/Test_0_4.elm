@@ -17,7 +17,7 @@ type Food =
 fromInt : Int -> Food
 fromInt int =
   asArray
-    |> StaticArray.get (int |> Index.fromModBy Length.two)
+  |> StaticArray.get (int |> Index.fromModBy Length.two)
 toInt : Food -> Int
 toInt food =
   case food of
