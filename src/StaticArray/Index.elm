@@ -68,9 +68,9 @@ first =
     import StaticArray.Index as Index
 
     Length.five
-    |> last
-    |> Index.toInt
-    --> 4
+        |> last
+        |> Index.toInt
+        --> 4
 
 -}
 last : Length n -> Index n
@@ -83,7 +83,7 @@ last (C const) =
     import StaticArray.Length as Length
 
     fromModBy (Length.one |> Length.plus2) 3
-    --> first --0
+        --> first --0
 
 -}
 fromModBy : Length n -> Int -> Index n
@@ -101,7 +101,7 @@ fromModBy (C const) =
         (Length.one |> Length.plus2)
 
     fromLessThen length 3
-    --> last length --2
+        --> last length --2
 
 -}
 fromLessThen : Length n -> Int -> Index n

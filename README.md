@@ -30,8 +30,8 @@ import StaticArray.Length as Length
 import StaticArray
 
 StaticArray.fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
-|> StaticArray.toList
---> [0,1,2,3,4,5]
+  |> StaticArray.toList
+  --> [0,1,2,3,4,5]
 ```
 
 
@@ -66,8 +66,8 @@ StaticArray.fromRecord
   , head = array1.head
   , tail = Array.append (array1.tail |> Array.push array2.head) array2.tail
   }
-|> StaticArray.toList
---> [0,1,2,3,4,5,0,1,2,3,4,5]
+  |> StaticArray.toList
+  --> [0,1,2,3,4,5,0,1,2,3,4,5]
 ```
 
 Notice that we can NOT do addition in compile time, therefore we need to construct `6+6` manually.
@@ -88,8 +88,8 @@ array =
   StaticArray.fromList six 0 [1,2,3,4,5]
 
 array
-|> StaticArray.resize (six |> Length.minus1)
---> StaticArray.fromList Length.five 0 [1,2,3,4]
+  |> StaticArray.resize (six |> Length.minus1)
+  --> StaticArray.fromList Length.five 0 [1,2,3,4]
 ```
 
 ## Avoiding index out of bounds errors
@@ -108,8 +108,8 @@ fifthIndex =
   array |> Index.last (Array |> StaticArray.length)
 
 array
-|> StaticArray.resize Length.one
-|> StaticArray.get fifthIndex --COMPILER ERROR
+  |> StaticArray.resize Length.one
+  |> StaticArray.get fifthIndex --COMPILER ERROR
 ```
 
 ## Converting into/from Int
@@ -136,12 +136,12 @@ toInt food =
 fromInt : Int -> Food
 fromInt int =
   asArray
-  |> StaticArray.get (int |> Index.fromModBy Length.two)
+    |> StaticArray.get (int |> Index.fromModBy Length.two)
 
 Apples
-|> toInt
-|> fromInt
---> Apples
+  |> toInt
+  |> fromInt
+  --> Apples
 ```
 
 No dead branch needed.  

@@ -51,8 +51,8 @@ type alias Length n =
 {-| Converts a length into int
 
     four
-    |> toInt
-    --> 4
+        |> toInt
+        --> 4
 
 -}
 toInt : Length n -> Int

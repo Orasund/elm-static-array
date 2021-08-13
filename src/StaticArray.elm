@@ -81,7 +81,7 @@ fromList (C l) head tail =
     import StaticArray.Length as Length
 
     initialize Length.five (\i -> i*i)
-    --> fromList Length.five 0 [1,4,9,16]
+        --> fromList Length.five 0 [1,4,9,16]
 
 -}
 initialize : Length n -> (Int -> a) -> StaticArray n a
@@ -145,7 +145,10 @@ toList =
         fromList (Length.five |> Length.plus1) 0
             [1,2,3,4,5]
 
-    array |> toRecord |> fromRecord --> array
+    array
+        |> toRecord
+        |> fromRecord
+        --> array
 
 -}
 toRecord : StaticArray n a -> { length : Length n, head : a, tail : Array a }
@@ -167,7 +170,7 @@ If the Length is bigger then the number of elements provided, the additional ele
         , head = 0
         , tail = Array.fromList [1,2,3,4,5]
         }
-    --> fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
+        --> fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
 
 -}
 fromRecord : { length : Length n, head : a, tail : Array a } -> StaticArray n a
