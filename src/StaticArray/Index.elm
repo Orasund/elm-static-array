@@ -120,7 +120,7 @@ increase (C const) (I n) =
         Nothing
 
 
-{-| Increases the index by one. You can not decrease the first index.
+{-| Decreases the index by one. You can not decrease the first index.
 -}
 decrease : Index n -> Maybe (Index n)
 decrease (I n) =
@@ -138,7 +138,7 @@ toInt (I n) =
     n
 
 
-{-| Change the range of the index. If the length is smaller then the index, it returns Nothing.
+{-| Change the range of the index. If the length is smaller then the index, return Nothing.
 -}
 setLength : Length m -> Index n -> Maybe (Index m)
 setLength (C const) (I n) =
