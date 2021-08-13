@@ -163,11 +163,11 @@ If the Length is bigger then the number of elements provided, the additional ele
     import Array
 
     fromRecord
-        { length = (Length.five |> Length.plus1 )
+        { length = (Length.five |> Length.plus1)
         , head = 0
         , tail = Array.fromList [1,2,3,4,5]
         }
-    --> fromList (Length.five |> Length.plus1 ) 0 [1,2,3,4,5]
+    --> fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
 
 -}
 fromRecord : { length : Length n, head : a, tail : Array a } -> StaticArray n a
