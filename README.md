@@ -145,3 +145,16 @@ Apples
 ```
 
 No dead branch needed.  
+
+## Mapping with Index
+
+```elm
+import StaticArray 
+import StaticArray.Length as Length
+import StaticArray.Index as Index
+
+StaticArray.initialize Length.five (\n -> n * n)
+  |> StaticArray.indexedMap (\idx -> \sqr -> (Index.toInt idx, sqr))
+  |> StaticArray.toList
+  --> [(0, 0), (1, 1), (2, 4), (3, 9), (4, 16)]
+```

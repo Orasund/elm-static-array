@@ -225,7 +225,7 @@ map fun (A ( head, tail )) =
 -}
 indexedMap : (Index n -> a -> b) -> StaticArray n a -> StaticArray n b
 indexedMap fun (A ( head, tail )) =
-    A ( fun (I 0) head, tail |> Array.indexedMap (\n -> fun (I (n - 1))) )
+    A ( fun (I 0) head, tail |> Array.indexedMap (\n -> fun (I (n + 1))) )
 
 
 {-| Returns the length of an array.
