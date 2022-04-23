@@ -2,7 +2,7 @@ module StaticArray.Index exposing
     ( One(..), OnePlus(..)
     , Index, range, first, last, fromModBy, fromLessThen
     , increase, decrease, toInt, setLength
-    , Two, Three, Four, Five, Seven, Eight, Nine, Ten, Twenty
+    , Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Twenty
     , TwoPlus, FourPlus, FivePlus, EightPlus, TenPlus, TwentyPlus
     )
 
@@ -29,7 +29,7 @@ This type will be replaced in compile type with an Int. Resulting in no performa
 
 # Predefined Number Types
 
-@docs Two, Three, Four, Five, Seven, Eight, Nine, Ten, Twenty
+@docs Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Twenty
 
 
 # Type Level Addition
