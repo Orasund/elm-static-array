@@ -17,7 +17,7 @@ type Food =
 fromInt : Int -> Food
 fromInt int =
   asArray
-  |> StaticArray.get (int |> Index.fromModBy Length.two)
+    |> StaticArray.get (int |> Index.fromModBy Length.two)
 toInt : Food -> Int
 toInt food =
   case food of
@@ -25,19 +25,19 @@ toInt food =
     Oranges -> 1
 asArray : StaticArray Two Food
 asArray =
-  StaticArray.fromList Length.two Apples [Oranges]
+  StaticArray.fromList Length.two (Apples,[Oranges])
 
 
 
 spec0 : Test.Test
 spec0 =
-    Test.test "Documentation VerifyExamples: \n\n    Apples\n    |> toInt\n    |> fromInt\n    --> Apples" <|
+    Test.test "Documentation VerifyExamples: \n\n    Apples\n      |> toInt\n      |> fromInt\n    --> Apples" <|
         \() ->
             Expect.equal
                 (
                 Apples
-                |> toInt
-                |> fromInt
+                  |> toInt
+                  |> fromInt
                 )
                 (
                 Apples

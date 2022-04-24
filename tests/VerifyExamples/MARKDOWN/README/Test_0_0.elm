@@ -17,12 +17,13 @@ import StaticArray.Length as Length
 
 spec0 : Test.Test
 spec0 =
-    Test.test "Documentation VerifyExamples: \n\n    StaticArray.fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]\n    |> StaticArray.toList\n    --> [0,1,2,3,4,5]" <|
+    Test.test "Documentation VerifyExamples: \n\n      (0,[1,2,3,4,5])\n      |> StaticArray.fromList (Length.five |> Length.plus1)\n      |> StaticArray.toList\n    --> [0,1,2,3,4,5]" <|
         \() ->
             Expect.equal
                 (
-                StaticArray.fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
-                |> StaticArray.toList
+                  (0,[1,2,3,4,5])
+                  |> StaticArray.fromList (Length.five |> Length.plus1)
+                  |> StaticArray.toList
                 )
                 (
                 [0,1,2,3,4,5]

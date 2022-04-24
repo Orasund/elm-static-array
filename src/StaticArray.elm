@@ -55,16 +55,19 @@ singleton a =
 
 {-| Constructs an array from a list
 
-    import Array
     import StaticArray.Length as Length
 
-    fromList Length.five 0 []
-        |> toArray
-        --> Array.repeat 5 0
+    fromList Length.five (0,[])
+        |> toList
+        --> [0,0,0,0,0]
+
+    fromList Length.five (0,[1,2,3,4])
+        |> toList
+        --> [0,1,2,3,4]
 
 -}
-fromList : Length n -> a -> List a -> StaticArray n a
-fromList (C l) head tail =
+fromList : Length n -> ( a, List a ) -> StaticArray n a
+fromList (C l) ( head, tail ) =
     let
         diff =
             (tail |> List.length |> (+) 1) - l
@@ -81,7 +84,7 @@ fromList (C l) head tail =
     import StaticArray.Length as Length
 
     initialize Length.five (\i -> i*i)
-        --> fromList Length.five 0 [1,4,9,16]
+        --> fromList Length.five (0,[1,4,9,16])
 
 -}
 initialize : Length n -> (Int -> a) -> StaticArray n a
@@ -142,8 +145,7 @@ toList =
 
     array : StaticArray (OnePlus Five) Int
     array =
-        fromList (Length.five |> Length.plus1) 0
-            [1,2,3,4,5]
+        fromList (Length.five |> Length.plus1) (0,[1,2,3,4,5])
 
     array
         |> toRecord
@@ -170,7 +172,7 @@ If the Length is bigger then the number of elements provided, the additional ele
         , head = 0
         , tail = Array.fromList [1,2,3,4,5]
         }
-        --> fromList (Length.five |> Length.plus1) 0 [1,2,3,4,5]
+        --> fromList (Length.five |> Length.plus1) (0,[1,2,3,4,5])
 
 -}
 fromRecord : { length : Length n, head : a, tail : Array a } -> StaticArray n a

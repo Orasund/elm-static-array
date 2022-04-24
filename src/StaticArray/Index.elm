@@ -1,7 +1,7 @@
 module StaticArray.Index exposing
     ( One(..), OnePlus(..)
     , Index, range, first, last, fromModBy, fromLessThen
-    , increase, decrease, toInt, setLength
+    , increase, decrease, toInt, fromInt, setLength
     , Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Twenty
     , TwoPlus, FourPlus, FivePlus, EightPlus, TenPlus, TwentyPlus
     )
@@ -24,7 +24,7 @@ This type will be replaced in compile type with an Int. Resulting in no performa
 
 # Operations
 
-@docs increase, decrease, toInt, setLength
+@docs increase, decrease, toInt, fromInt, setLength
 
 
 # Predefined Number Types
@@ -76,6 +76,26 @@ first =
 last : Length n -> Index n
 last (C const) =
     I (const - 1)
+
+
+{-| Turn a number into an Index and returns Nothing if the number is not in the range.
+
+    import StaticArray.Length as Length
+
+    fromInt Length.one -1 --> Nothing
+
+    fromInt Length.one 0 --> Just (fromLessThen Length.one 0)
+
+    fromInt Length.one 1 --> Nothing
+
+-}
+fromInt : Length n -> Int -> Maybe (Index n)
+fromInt (C const) i =
+    if 0 <= i && i < const then
+        I i |> Just
+
+    else
+        Nothing
 
 
 {-| Construct an Index by wrapping higher values

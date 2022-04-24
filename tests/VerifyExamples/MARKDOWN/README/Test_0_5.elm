@@ -8,7 +8,7 @@ import Expect
 
 import StaticArray.Index as Index
 import StaticArray.Length as Length
-import StaticArray 
+import StaticArray
 
 
 

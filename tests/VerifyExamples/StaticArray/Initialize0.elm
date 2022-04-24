@@ -17,12 +17,12 @@ import StaticArray.Length as Length
 
 spec0 : Test.Test
 spec0 =
-    Test.test "#initialize: \n\n    initialize Length.five (\\i -> i*i)\n    --> fromList Length.five 0 [1,4,9,16]" <|
+    Test.test "#initialize: \n\n    initialize Length.five (\\i -> i*i)\n    --> fromList Length.five (0,[1,4,9,16])" <|
         \() ->
             Expect.equal
                 (
                 initialize Length.five (\i -> i*i)
                 )
                 (
-                fromList Length.five 0 [1,4,9,16]
+                fromList Length.five (0,[1,4,9,16])
                 )

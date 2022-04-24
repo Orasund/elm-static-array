@@ -14,18 +14,19 @@ import StaticArray.Length as Length
 
 array : StaticArray (OnePlus Five) Int
 array =
-    fromList (Length.five |> Length.plus1) 0
-        [1,2,3,4,5]
+    fromList (Length.five |> Length.plus1) (0,[1,2,3,4,5])
 
 
 
 spec0 : Test.Test
 spec0 =
-    Test.test "#toRecord: \n\n    array |> toRecord |> fromRecord\n    --> array" <|
+    Test.test "#toRecord: \n\n    array\n        |> toRecord\n        |> fromRecord\n    --> array" <|
         \() ->
             Expect.equal
                 (
-                array |> toRecord |> fromRecord
+                array
+                    |> toRecord
+                    |> fromRecord
                 )
                 (
                 array

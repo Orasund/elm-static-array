@@ -14,22 +14,19 @@ import StaticArray.Length as Length exposing (Length)
 
 array : StaticArray (OnePlus Five) Int
 array =
-  StaticArray.fromList six 0 [1,2,3,4,5]
-six : Length (OnePlus Five)
-six =
-  Length.five |> Length.plus1
+  StaticArray.fromList Length.six (0,[1,2,3,4,5])
 
 
 
 spec0 : Test.Test
 spec0 =
-    Test.test "Documentation VerifyExamples: \n\n    array\n    |> StaticArray.resize (six |> Length.minus1)\n    --> StaticArray.fromList Length.five 0 [1,2,3,4]" <|
+    Test.test "Documentation VerifyExamples: \n\n    array\n      |> StaticArray.resize (Length.six |> Length.minus1)\n    --> StaticArray.fromList Length.five (0,[1,2,3,4])" <|
         \() ->
             Expect.equal
                 (
                 array
-                |> StaticArray.resize (six |> Length.minus1)
+                  |> StaticArray.resize (Length.six |> Length.minus1)
                 )
                 (
-                StaticArray.fromList Length.five 0 [1,2,3,4]
+                StaticArray.fromList Length.five (0,[1,2,3,4])
                 )

@@ -15,24 +15,23 @@ import StaticArray.Length as Length exposing (Length)
 
 array2 : { head : Int, length : Length (OnePlus Five), tail : Array.Array Int }
 array2 =
-  StaticArray.fromList six 0 [1,2,3,4,5]
+  (6,[7,8,9,10,11])
+  |> StaticArray.fromList Length.six
   |> StaticArray.toRecord
 array1 : { head : Int, length : Length (OnePlus Five), tail : Array.Array Int }
 array1 =
-  StaticArray.fromList six 0 [1,2,3,4,5]
+  (0,[1,2,3,4,5])
+  |> StaticArray.fromList Length.six
   |> StaticArray.toRecord
 twelve : Length (TwoPlus Ten)
 twelve =
   Length.ten |> Length.plus2
-six : Length (OnePlus Five)
-six =
-  Length.five |> Length.plus1
 
 
 
 spec0 : Test.Test
 spec0 =
-    Test.test "Documentation VerifyExamples: \n\n    StaticArray.fromRecord\n      { length = twelve\n      , head = array1.head\n      , tail = Array.append (array1.tail |> Array.push array2.head) array2.tail\n      }\n    |> StaticArray.toList\n    --> [0,1,2,3,4,5,0,1,2,3,4,5]" <|
+    Test.test "Documentation VerifyExamples: \n\n    StaticArray.fromRecord\n      { length = twelve\n      , head = array1.head\n      , tail = Array.append (array1.tail |> Array.push array2.head) array2.tail\n      }\n      |> StaticArray.toList\n    --> [0,1,2,3,4,5,6,7,8,9,10,11]" <|
         \() ->
             Expect.equal
                 (
@@ -41,8 +40,8 @@ spec0 =
                   , head = array1.head
                   , tail = Array.append (array1.tail |> Array.push array2.head) array2.tail
                   }
-                |> StaticArray.toList
+                  |> StaticArray.toList
                 )
                 (
-                [0,1,2,3,4,5,0,1,2,3,4,5]
+                [0,1,2,3,4,5,6,7,8,9,10,11]
                 )

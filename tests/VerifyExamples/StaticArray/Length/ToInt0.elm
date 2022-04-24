@@ -16,12 +16,12 @@ import StaticArray.Length exposing (..)
 
 spec0 : Test.Test
 spec0 =
-    Test.test "#toInt: \n\n    four\n    |> toInt\n    --> 4" <|
+    Test.test "#toInt: \n\n    four\n        |> toInt\n    --> 4" <|
         \() ->
             Expect.equal
                 (
                 four
-                |> toInt
+                    |> toInt
                 )
                 (
                 4
